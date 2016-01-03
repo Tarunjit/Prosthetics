@@ -1,0 +1,9 @@
+solid "cylinder_sphereA"
+  facet normal 0.309017032385 0 -0.951056480408
+    outer loop
+      vertex 7.08540781602e-008 10 -10
+      vertex 7.08540781602e-008 10 10
+      vertex 5.87785243988 8.09016990662 10
+    endloop
+  endfacet
+endsolid "cylinder_sphereA"
