@@ -44,7 +44,10 @@ y_train = train[:, np.floor(0.5 * n_pixels):]  # Lower half of the faces
 X_test = test[:, :np.ceil(0.5 * n_pixels)]
 y_test = test[:, np.floor(0.5 * n_pixels):]
 
-print (X_train)
+print (data.shape)
+print (y_train.shape)
+print (X_test.shape)
+print (y_test.shape)
 
 # Fit estimators
 ESTIMATORS = {
@@ -97,4 +100,4 @@ for i in range(n_faces):
                    cmap=plt.cm.gray,
                    interpolation="nearest")
 
-plt.show()
+#plt.show()

@@ -19,6 +19,7 @@ for i in range(1,your_mesh2.data.size):
 
 print(train_array[0])
 print(train_array.shape[0])
+print(train_array.shape)
 #print(your_mesh3.data[117])
 
 ############################################# OUTPUT ###################################################################
