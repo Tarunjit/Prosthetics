@@ -35,7 +35,7 @@ for i in range(1,your_mesh.data.size):
     X_test_array = np.concatenate((X_test_array, [np.append(your_mesh3.data[i][0], your_mesh3.data[i][1])]))
 
 
-#print(X_train_array.shape)
+print(X_train_array.ravel())
 #print(Y_train_array.shape)
 #print(X_test_array.shape)
 #print(your_mesh3.data[117])
