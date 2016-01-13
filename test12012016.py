@@ -66,8 +66,8 @@ ESTIMATORS = {
     #"Extra trees": ExtraTreesRegressor(n_estimators=10, max_features=32,
                                        #random_state=0)#,
     #"K-nn": KNeighborsRegressor()#,
-    #"Linear regression": LinearRegression()#,
-    "Ridge": RidgeCV()#,
+    "Linear regression": LinearRegression()#,
+    #"Ridge": RidgeCV()#,
 }
 
 #y_test_predict = dict()
@@ -76,20 +76,25 @@ for name, estimator in ESTIMATORS.items():
     y_test_predict = estimator.predict(X_test)
 
 print(y_test_predict.shape)
+print(y_test_predict[0])
 ############################################# OUTPUT ###################################################################
 
 # define unravelling logic - required
 
-data = np.zeros(y_test_predict.shape[0], dtype=mesh.Mesh.dtype)
+data = np.zeros(101, dtype=mesh.Mesh.dtype)
 
-for i in range(y_test_predict.shape[0]):
-    data['vectors'][i] = np.array([[y_test_predict[i][3], y_test_predict[i][4], y_test_predict[i][5]],
-                                   [y_test_predict[i][6], y_test_predict[i][7], y_test_predict[i][8]],
-                                   [y_test_predict[i][9], y_test_predict[i][10], y_test_predict[i][11]]])
+for i in range(101):
+    if i == 1:
+        print(12*i+1)
+    if i == 2:
+        print(12*i+1)
+    data['vectors'][i] = np.array([[y_test_predict[0][12*i+3], y_test_predict[0][12*i+4], y_test_predict[0][12*i+5]],
+                                   [y_test_predict[0][12*i+6], y_test_predict[0][12*i+7], y_test_predict[0][12*i+8]],
+                                   [y_test_predict[0][12*i+9], y_test_predict[0][12*i+10], y_test_predict[0][12*i+11]]])
 
-#print(data['vectors'])
+# print(data.shape)
 
 new_mesh = mesh.Mesh(data.copy())
-print(new_mesh)
+# print(new_mesh)
 new_mesh.save('new_stl_file.stl', mode=1)
 
