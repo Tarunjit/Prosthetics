@@ -8,6 +8,7 @@ from matplotlib import pyplot
 from stl import mesh
 import numpy as np
 
+
 from sklearn.ensemble import ExtraTreesRegressor
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.linear_model import LinearRegression
@@ -16,29 +17,48 @@ from sklearn.linear_model import RidgeCV
 # Load the STL files and add the vectors to the plot
 #your_mesh2 = mesh.Mesh.from_file('../STLFiles/test2.stl')
 
-# need to do ravelling - it is required
+# need to do ravelling - it is required ... done
 your_mesh = mesh.Mesh.from_file('./STLFiles/cylinder_sphereA.stl')
 your_mesh2 = mesh.Mesh.from_file('./STLFiles/cylinder_sphereA_offset.stl')
-your_mesh3 = mesh.Mesh.from_file('./STLFiles/cylinder_sphereB_offset.stl')
+your_mesh3 = mesh.Mesh.from_file('./STLFiles/cylinder_sphereB.stl')
+your_mesh4 = mesh.Mesh.from_file('./STLFiles/cylinder_sphereB_offset.stl')
+your_mesh5 = mesh.Mesh.from_file('./STLFiles/cylinder_sphereC.stl')
 
-X_train_array = [np.append(your_mesh.data[0][0], your_mesh.data[0][1])]
-Y_train_array = [np.append(your_mesh2.data[0][0], your_mesh2.data[0][1])]
-X_test_array = [np.append(your_mesh3.data[0][0], your_mesh3.data[0][1])]
+X_train_array1 = [np.append(your_mesh.data[0][0], your_mesh.data[0][1])]
+Y_train_array1 = [np.append(your_mesh2.data[0][0], your_mesh2.data[0][1])]
+X_train_array2 = [np.append(your_mesh3.data[0][0], your_mesh3.data[0][1])]
+Y_train_array2 = [np.append(your_mesh4.data[0][0], your_mesh4.data[0][1])]
+X_test_array = [np.append(your_mesh5.data[0][0], your_mesh5.data[0][1])]
 
-for i in range(1,your_mesh.data.size):
-    X_train_array = np.concatenate((X_train_array, [np.append(your_mesh.data[i][0], your_mesh.data[i][1])]))
+for i in range(1,your_mesh5.data.size):
+    X_train_array1 = np.concatenate((X_train_array1, [np.append(your_mesh.data[i][0], your_mesh.data[i][1])]))
 
-for i in range(1,your_mesh.data.size):
-    Y_train_array = np.concatenate((Y_train_array, [np.append(your_mesh2.data[i][0], your_mesh2.data[i][1])]))
+for i in range(1,your_mesh5.data.size):
+    Y_train_array1 = np.concatenate((Y_train_array1, [np.append(your_mesh2.data[i][0], your_mesh2.data[i][1])]))
 
-for i in range(1,your_mesh.data.size):
-    X_test_array = np.concatenate((X_test_array, [np.append(your_mesh3.data[i][0], your_mesh3.data[i][1])]))
+for i in range(1,your_mesh5.data.size):
+    X_train_array2 = np.concatenate((X_train_array2, [np.append(your_mesh3.data[i][0], your_mesh3.data[i][1])]))
 
+for i in range(1,your_mesh5.data.size):
+    Y_train_array2 = np.concatenate((Y_train_array2, [np.append(your_mesh4.data[i][0], your_mesh4.data[i][1])]))
 
-print(X_train_array.ravel())
-#print(Y_train_array.shape)
-#print(X_test_array.shape)
+for i in range(1,your_mesh5.data.size):
+    X_test_array = np.concatenate((X_test_array, [np.append(your_mesh5.data[i][0], your_mesh5.data[i][1])]))
+
+X_train = np.vstack([X_train_array1.ravel(), X_train_array2.ravel()])
+Y_train = np.vstack([Y_train_array1.ravel(), Y_train_array2.ravel()])
+X_test = np.vstack([X_test_array.ravel()])
+print(X_train_array1.ravel().shape)
+print(your_mesh.data[0])
+print(X_train.shape)
+
+print(X_train_array1.shape)
+print(X_train_array2.shape)
+print(Y_train_array1.shape)
+print(Y_train_array2.shape)
+print(X_test.shape)
 #print(your_mesh3.data[117])
+
 ############################################# ML ###################################################################
 
 # Fit estimators
@@ -52,8 +72,8 @@ ESTIMATORS = {
 
 #y_test_predict = dict()
 for name, estimator in ESTIMATORS.items():
-    estimator.fit(X_train_array, Y_train_array)
-    y_test_predict = estimator.predict(X_test_array)
+    estimator.fit(X_train, Y_train)
+    y_test_predict = estimator.predict(X_test)
 
 print(y_test_predict.shape)
 ############################################# OUTPUT ###################################################################
